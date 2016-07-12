@@ -30,7 +30,7 @@ describe OysterCard do
   describe '#deduct' do
     it 'deducts amount from the card' do
       subject.top_up(10)
-      expect{subject.deduct(5)}.to change{subject.balance}.by -5
+      expect{subject.deduct(5)}.to change{subject.balance}.by(-5)
     end
   end
 
@@ -40,11 +40,17 @@ describe OysterCard do
     end
 
     it 'can touch in' do
+      subject.top_up(50)
       subject.touch_in
       expect(subject).to be_in_journey
     end
 
+    it 'error if card has insufficient balance' do
+      expect{subject.touch_in}.to raise_error "Card has insufficient balance"
+    end
+
     it 'can touch out' do
+      subject.top_up(50)
       subject.touch_in
       subject.touch_out
       expect(subject).not_to be_in_journey
