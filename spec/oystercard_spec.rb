@@ -4,7 +4,6 @@ describe OysterCard do
   subject(:oystercard) {described_class.new}
   it { is_expected.to(respond_to(:balance))}
   it { is_expected.to(respond_to(:top_up).with(1).argument) }
-  it { is_expected.to(respond_to(:deduct).with(1).argument) }
   it { is_expected.to(respond_to(:in_journey?))}
 
   describe 'initialize' do
@@ -24,13 +23,6 @@ describe OysterCard do
       maximum_balance = OysterCard::MAXIMUM_BALANCE
       subject.top_up(maximum_balance)
       expect{subject.top_up(1)}.to raise_error "Max balance of £#{maximum_balance} exceeded"
-    end
-  end
-
-  describe '#deduct' do
-    it 'deducts amount from the card' do
-      subject.top_up(10)
-      expect{subject.deduct(5)}.to change{subject.balance}.by(-5)
     end
   end
 
@@ -54,6 +46,11 @@ describe OysterCard do
       subject.touch_in
       subject.touch_out
       expect(subject).not_to be_in_journey
+    end
+    it 'when touch_out it deducts amount' do
+      subject.top_up 50
+      subject.touch_in
+      expect{subject.touch_out}.to change{subject.balance}.by(-OysterCard::MINIMUM_FARE)
     end
   end
 end
