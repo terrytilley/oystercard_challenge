@@ -4,6 +4,7 @@ describe OysterCard do
   subject(:oystercard) {described_class.new}
   it { is_expected.to(respond_to(:balance))}
   it { is_expected.to(respond_to(:top_up).with(1).argument) }
+  it { is_expected.to(respond_to(:deduct).with(1).argument) }
 
   describe 'initialize' do
 
@@ -13,7 +14,7 @@ describe OysterCard do
 
   end
 
-  describe 'top_up' do
+  describe '#top_up' do
     it 'when top_up it changes the balance' do
       expect{subject.top_up(10)}.to change{subject.balance}.by 10
     end
@@ -23,5 +24,13 @@ describe OysterCard do
       subject.top_up(maximum_balance)
       expect{subject.top_up(1)}.to raise_error "Max balance of £#{maximum_balance} exceeded"
     end
+  end
+
+  describe '#deduct' do
+    it 'deducts amount from the card' do
+      subject.top_up(10)
+      expect{subject.deduct(5)}.to change{subject.balance}.by -5
+    end
+
   end
 end
