@@ -18,7 +18,7 @@ class OysterCard
   end
 
   def in_journey?
-    !@journeys.last.include?(:exit_station)
+    @journeys.last.in_journey?
   end
 
   def touch_in(station)

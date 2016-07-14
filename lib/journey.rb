@@ -1,5 +1,9 @@
 class Journey
-  # attr_reader 
+  attr_reader :start_station, :end_station
+
+  def in_journey?
+    @end_station.nil?
+  end
 
   def start_station(station)
     @start_station = station

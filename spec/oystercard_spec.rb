@@ -66,7 +66,7 @@ describe OysterCard do
       expect(card.journeys).to be_empty
     end
 
-    let(:journey){ {entry_station: station, exit_station: station} }
+    let(:journey){ {start_station: station, end_station: station} }
 
     it 'stores a journey' do
       card.touch_in(station)
