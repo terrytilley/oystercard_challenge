@@ -58,20 +58,14 @@ describe OysterCard do
       expect{card.touch_out(station)}.to change{card.balance}.by(-OysterCard::MINIMUM_FARE)
     end
 
-    it 'stores the station entry' do
-      expect(card.touch_in(station)).to eq station
-    end
-
     it 'has an empty list of journeys by default' do
       expect(card.journeys).to be_empty
     end
 
-    let(:journey){ {start_station: station, end_station: station} }
-
     it 'stores a journey' do
       card.touch_in(station)
       card.touch_out(station)
-      expect(card.journeys).to include journey
+      expect(card.journeys.size).to eq(1)
     end
   end
 end

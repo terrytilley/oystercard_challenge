@@ -18,7 +18,7 @@ class OysterCard
   end
 
   def in_journey?
-    @journeys.last.in_journey?
+    @journeys.empty? ? false : @journeys.last.in_journey?
   end
 
   def touch_in(station)
